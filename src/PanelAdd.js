@@ -14,7 +14,7 @@ class PanelAdd extends React.Component{
     onChangeTitle = (e) =>{
         this.setState({title: e.target.value});
     }
-    onChangeIamge = (e) =>{
+    onChangeImage = (e) =>{
         this.setState({image: e.target.value});
     }
     onChangeRating = (e) =>{
@@ -22,14 +22,14 @@ class PanelAdd extends React.Component{
         this.setState({rating: rating});
     }
 
-    onSubmit(e){
+    onSubmit = (e) =>{
         e.preventDefault();
         const title = this.state.title;
         const image = this.state.image;
         const rating = this.state.rating;
 
         this.props.onadd({title: title, image: image, rating: rating});
-        this.cancelAction();
+        this.props.oncancel();
     }
 
 
