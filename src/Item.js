@@ -6,22 +6,44 @@ class Item extends React.Component{
         super(props);
 
         this.state ={
+            title: '',
+            image: '',
+            rating: 1,
             stars:[]
         };
     }
 
     componentDidMount(){
         this.setState({
+            id: this.props.id,
+            title: this.props.title,
+            image: this.props.image,
+            rating: parseInt(this.props.rating),
             stars: Array(parseInt(this.props.rating)).fill(0)
         });
+    }
+
+    onChangeRating = e =>{
+        const rating = parseInt(e.target.value)
+
+        this.setState({
+            rating: parseInt(e.target.value),
+            stars: Array(parseInt(e.target.value)).fill(0)
+        });
+
+        this.props.onupdaterating({id: this.state.id, title: this.state.title, image: this.state.image, rating: this.state.rating});
+    }
+
+    onRemove = e =>{
+        this.props.onremove(this.props.id);
     }
 
 
     render(){
         return(
             <div className="item">
-                <div className="image"><img src={'img/' + this.props.image} width="100%" /></div>
-                <div className="title">{this.props.title}</div>
+                <div className="image"><img src={'img/' + this.state.image} width="100%" /></div>
+                <div className="title">{this.state.title}</div>
                 <div className="rating">
                     <p>
                     {
@@ -31,7 +53,7 @@ class Item extends React.Component{
                     }
                     </p>
                     Calificación:
-                    <select value={this.props.rating}>
+                    <select value={this.state.rating} onChange={this.onChangeRating}>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -40,7 +62,7 @@ class Item extends React.Component{
                     </select>
                 </div>
                 <div className="actions">
-                    <button>Eliminar</button>
+                    <button onClick={this.onremove}>Eliminar</button>
                 </div>
             </div>
     );    
